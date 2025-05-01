@@ -27,7 +27,7 @@ vvvvvv:
 	cd $(VVVVVV_DIR)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
 	wget -O $(VVVVVV_DIR)/$(BUILD_DIR)/data.zip $(DATA_ZIP_URL)
 
-launch_game:
+play:
 	cd $(VVVVVV_DIR)/$(BUILD_DIR) && ./VVVVVV
 
 clean:
