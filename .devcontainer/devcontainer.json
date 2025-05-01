@@ -1,8 +1,16 @@
 {
-	"name": "Ubuntu",
+	"name": "Microsoft Ubuntu Dev Container",
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"args": {
+			"USERNAME": "ubuntu",
+			"USER_UID": "1000",
+			"WORKSPACE": "/workspace/${localWorkspaceFolderBasename}"
+		}
 	},
+	"mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,type=bind,consistency=cached"
+	],
 	"runArgs": [
 		"--env", "DISPLAY=${env:DISPLAY}",
 		"--volume", "/tmp/.X11-unix:/tmp/.X11-unix:rw",
