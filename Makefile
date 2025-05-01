@@ -3,13 +3,16 @@ SDL_SOURCE_DIR := .sdl
 SDL_GIT_URL := https://github.com/libsdl-org/SDL.git
 SDL_GIT_BRANCH := release-2.24.0
 SDL_WAYLAND := ON
+SDL_IS_INSTALLED := $(SDL_SOURCE_DIR)
 
 # If the README.md file is not present, it means the submodule is not initialized
-VVVVVV_SOURCE_DIR := src/cpp/VVVVVV/README.md
+VVVVVV_SOURCE_DIR := src/cpp/VVVVVV
+VVVVVV_SOURCE_GIT_IS_INIT := $(VVVVVV_SOURCE_DIR)/README.md
 
 # This file is necessary for the game to run
 DATA_ZIP := data.zip
 DATA_ZIP_URL := https://thelettervsixtim.es/makeandplay/data.zip
+DATA_ZIP_IS_DOWNLOADED := $(DATA_ZIP)
 
 CPP_SRC := src/cpp
 BUILD_DIR := build
@@ -25,19 +28,19 @@ build: .dependecies
 	@cd $(CPP_SRC)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
 	@ln -sf $(abspath $(DATA_ZIP)) $(CPP_SRC)/$(BUILD_DIR)/data.zipm
 
-.dependecies: $(SDL_SOURCE_DIR) $(VVVVVV_SOURCE_DIR) $(DATA_ZIP)
+.dependecies: $(SDL_IS_INSTALLED) $(VVVVVV_SOURCE_GIT_IS_INIT) $(DATA_ZIP_IS_DOWNLOADED)
 	@echo "Dependencies ready."
 
-$(SDL_SOURCE_DIR):
+$(SDL_IS_INSTALLED):
 	@git clone $(SDL_GIT_URL) $(SDL_SOURCE_DIR) --branch $(SDL_GIT_BRANCH)
 	@mkdir -p $(SDL_SOURCE_DIR)/$(BUILD_DIR)
 	@cd $(SDL_SOURCE_DIR)/$(BUILD_DIR) && cmake .. -DSDL_WAYLAND=$(SDL_WAYLAND) && make -j $(NPROC)
 	@sudo make -C $(SDL_SOURCE_DIR)/$(BUILD_DIR) install
 
-$(VVVVVV_SOURCE_DIR):
-	@git submodule update --init VVVVVV
+$(VVVVVV_SOURCE_GIT_IS_INIT):
+	@git submodule update --init --recursive $(VVVVVV_SOURCE_DIR)
 
-$(DATA_ZIP):
+$(DATA_ZIP_IS_DOWNLOADED):
 	@wget -O $(DATA_ZIP) $(DATA_ZIP_URL)
 
 play:
