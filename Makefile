@@ -4,13 +4,14 @@ VVVVVV_DIR := VVVVVV/desktop_version
 DATA_ZIP_URL := https://thelettervsixtim.es/makeandplay/data.zip
 BUILD_DIR := build
 NPROC := $(shell nproc)
+USE_WAYLAND := ON
 
 # Targets
 .PHONY: all sdl vvvvvv
 
 all: vvvvvv
 
-install_dependencies: git_submodule sdl2
+install_dependecies: git_submodule sdl2
 	@echo "Dependencies installed."
 
 git_submodule:
@@ -18,7 +19,7 @@ git_submodule:
 
 sdl2:
 	mkdir -p $(SDL_DIR)/$(BUILD_DIR)
-	cd $(SDL_DIR)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
+	cd $(SDL_DIR)/$(BUILD_DIR) && cmake .. -DSDL_WAYLAND=$(USE_WAYLAND) && make -j $(NPROC)
 	sudo make -C $(SDL_DIR)/$(BUILD_DIR) install
 
 vvvvvv:

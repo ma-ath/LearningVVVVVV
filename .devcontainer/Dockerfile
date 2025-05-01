@@ -33,5 +33,22 @@ RUN sudo apt-get update && \
         cmake\
         git\
         gnupg2\
+        libdrm-dev\
+        libegl1-mesa-dev\
+        libxkbcommon-dev\
+        libwayland-dev\
+        libwayland-client0\
+        libwayland-server0\
+        libxext-dev\
         linux-headers-$(uname -r)\
-        wget
+        libpulse-dev\
+        libasound2-dev\
+        libpipewire-0.3-dev\
+        pkg-config\  
+        wayland-protocols\
+        wget\
+        xdg-desktop-portal\
+        xdg-desktop-portal-gtk
+
+    
+ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH

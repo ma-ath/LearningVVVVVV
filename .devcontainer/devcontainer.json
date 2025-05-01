@@ -1,19 +1,32 @@
 {
-	"name": "Microsoft Ubuntu Dev Container",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": {
-			"USERNAME": "ubuntu",
-			"USER_UID": "1000",
-			"WORKSPACE": "/workspace/${localWorkspaceFolderBasename}"
-		}
-	},
-	"mounts": [
+  "name": "Microsoft Ubuntu Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USERNAME": "ubuntu",
+      "USER_UID": "1000",
+      "WORKSPACE": "/workspace/${localWorkspaceFolderBasename}"
+    }
+  },
+  "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,type=bind,consistency=cached"
-	],
-	"runArgs": [
-		"--env", "DISPLAY=${env:DISPLAY}",
-		"--volume", "/tmp/.X11-unix:/tmp/.X11-unix:rw",
-		"--dns", "8.8.8.8"
-	]
+  ],
+  "runArgs": [
+    "--env", "DISPLAY=${env:WAYLAND_DISPLAY}",
+    "--env", "WAYLAND_DISPLAY=${env:WAYLAND_DISPLAY}",
+    "--env", "XDG_RUNTIME_DIR=/run/user/1000",
+
+    // ✅ Audio: PulseAudio socket and cookie
+    "--env", "PULSE_SERVER=unix:/tmp/pulse_socket",
+    "--volume", "/run/user/1000/pulse/native:/tmp/pulse_socket",
+    "--volume", "${env:HOME}/.config/pulse/cookie:/home/ubuntu/.config/pulse/cookie",
+
+    // Wayland support
+    "--volume", "/run/user/1000/wayland-0:/run/user/1000/wayland-0",
+
+    // Optional: share host audio device (for ALSA fallback)
+    "--device", "/dev/snd",
+
+    "--dns", "8.8.8.8"
+  ]
 }
