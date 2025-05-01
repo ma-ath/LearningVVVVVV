@@ -1,1 +1,8 @@
+# Wildcards for folders
+**/build
+
+# Folders
+.sdl/
+
+# Files
 data.zip

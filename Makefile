@@ -1,34 +1,53 @@
-# Variables
-SDL_DIR := game/SDL
-VVVVVV_DIR := game/VVVVVV/desktop_version
+# Install SDL2 dependency
+SDL_SOURCE_DIR := .sdl
+SDL_GIT_URL := https://github.com/libsdl-org/SDL.git
+SDL_GIT_BRANCH := release-2.24.0
+SDL_WAYLAND := ON
+
+# If the README.md file is not present, it means the submodule is not initialized
+VVVVVV_SOURCE_DIR := src/cpp/VVVVVV/README.md
+
+# This file is necessary for the game to run
+DATA_ZIP := data.zip
 DATA_ZIP_URL := https://thelettervsixtim.es/makeandplay/data.zip
+
+CPP_SRC := src/cpp
 BUILD_DIR := build
 NPROC := $(shell nproc)
-USE_WAYLAND := ON
 
 # Targets
-.PHONY: all sdl vvvvvv
+.PHONY: build .dependencies
 
-all: vvvvvv
+all: build
 
-install_dependecies: git_submodule sdl2
-	@echo "Dependencies installed."
+build: .dependecies
+	@mkdir -p $(CPP_SRC)/$(BUILD_DIR)
+	@cd $(CPP_SRC)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
+	@ln -sf $(abspath $(DATA_ZIP)) $(CPP_SRC)/$(BUILD_DIR)/data.zipm
 
-git_submodule:
-	git submodule update --init --recursive
+.dependecies: $(SDL_SOURCE_DIR) $(VVVVVV_SOURCE_DIR) $(DATA_ZIP)
+	@echo "Dependencies ready."
 
-sdl2:
-	mkdir -p $(SDL_DIR)/$(BUILD_DIR)
-	cd $(SDL_DIR)/$(BUILD_DIR) && cmake .. -DSDL_WAYLAND=$(USE_WAYLAND) && make -j $(NPROC)
-	sudo make -C $(SDL_DIR)/$(BUILD_DIR) install
+$(SDL_SOURCE_DIR):
+	@git clone $(SDL_GIT_URL) $(SDL_SOURCE_DIR) --branch $(SDL_GIT_BRANCH)
+	@mkdir -p $(SDL_SOURCE_DIR)/$(BUILD_DIR)
+	@cd $(SDL_SOURCE_DIR)/$(BUILD_DIR) && cmake .. -DSDL_WAYLAND=$(SDL_WAYLAND) && make -j $(NPROC)
+	@sudo make -C $(SDL_SOURCE_DIR)/$(BUILD_DIR) install
 
-vvvvvv:
-	mkdir -p $(VVVVVV_DIR)/$(BUILD_DIR)
-	cd $(VVVVVV_DIR)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
-	wget -O $(VVVVVV_DIR)/$(BUILD_DIR)/data.zip $(DATA_ZIP_URL)
+$(VVVVVV_SOURCE_DIR):
+	@git submodule update --init VVVVVV
+
+$(DATA_ZIP):
+	@wget -O $(DATA_ZIP) $(DATA_ZIP_URL)
 
 play:
-	cd $(VVVVVV_DIR)/$(BUILD_DIR) && ./VVVVVV
+	@cd $(CPP_SRC)/$(BUILD_DIR) && ./VVVVVV
 
 clean:
-	rm -rf $(SDL_DIR)/$(BUILD_DIR) $(VVVVVV_DIR)/$(BUILD_DIR)
+	@rm -rf $(CPP_SRC)/$(BUILD_DIR)
+
+purge: clean
+	@rm -f $(DATA_ZIP)
+	@rm -rf $(SDL_SOURCE_DIR)
+	@git submodule deinit -f --all
+	@echo "All dependencies removed."
