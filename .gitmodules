@@ -1,7 +1,7 @@
 [submodule "SDL"]
-	path = SDL
+	path = game/SDL
 	url = https://github.com/libsdl-org/SDL.git
 	branch = release-2.24.0
 [submodule "VVVVVV"]
-	path = VVVVVV
+	path = game/VVVVVV
 	url = https://github.com/TerryCavanagh/VVVVVV

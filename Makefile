@@ -1,6 +1,6 @@
 # Variables
-SDL_DIR := SDL
-VVVVVV_DIR := VVVVVV/desktop_version
+SDL_DIR := game/SDL
+VVVVVV_DIR := game/VVVVVV/desktop_version
 DATA_ZIP_URL := https://thelettervsixtim.es/makeandplay/data.zip
 BUILD_DIR := build
 NPROC := $(shell nproc)
