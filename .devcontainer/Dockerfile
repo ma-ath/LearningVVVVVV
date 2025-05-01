@@ -29,8 +29,9 @@ RUN sudo apt-get update && \
     sudo apt-get upgrade -y && \
     sudo apt-get install -y --no-install-recommends \
         build-essential \
-        linux-headers-$(uname -r) \
+        ca-certificates\
         cmake\
         git\
-        wget\
-        gnupg2
+        gnupg2\
+        linux-headers-$(uname -r)\
+        wget
