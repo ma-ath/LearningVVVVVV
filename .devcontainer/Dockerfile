@@ -10,7 +10,8 @@ RUN git submodule update --init &&\
          cmake
 
 # Install SDL 2.24
-RUN mkdir -p SDL/build &&\
+RUN git clone --branch release-2.24.0 https://github.com/libsdl-org/SDL.git &&\
+    mkdir -p SDL/build &&\
     cd SDL/build &&\
     cmake .. &&\
     make -j $(nproc) &&\

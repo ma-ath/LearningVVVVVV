@@ -1,0 +1,6 @@
+[submodule "SDL"]
+	path = SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "VVVVVV"]
+	path = VVVVVV
+	url = https://github.com/TerryCavanagh/VVVVVV
