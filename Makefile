@@ -54,5 +54,6 @@ clean:
 purge: clean
 	@rm -f $(DATA_ZIP)
 	@rm -rf $(SDL_SOURCE_DIR)
+	@rm -rf .git/modules/VVVVVV
 	@git submodule deinit -f --all
 	@echo "All dependencies removed."
