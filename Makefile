@@ -16,6 +16,7 @@ DATA_ZIP_IS_DOWNLOADED := $(DATA_ZIP)
 
 CPP_SRC := src/cpp
 BUILD_DIR := build
+BIN_DIR := bin
 NPROC := $(shell nproc)
 
 # Targets
@@ -26,7 +27,7 @@ all: build
 build: .dependecies
 	@mkdir -p $(CPP_SRC)/$(BUILD_DIR)
 	@cd $(CPP_SRC)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
-	@ln -sf $(abspath $(DATA_ZIP)) $(CPP_SRC)/$(BUILD_DIR)/data.zipm
+	@ln -sf $(abspath $(DATA_ZIP)) $(CPP_SRC)/$(BIN_DIR)/$(DATA_ZIP)
 
 .dependecies: $(SDL_IS_INSTALLED) $(VVVVVV_SOURCE_GIT_IS_INIT) $(DATA_ZIP_IS_DOWNLOADED)
 	@echo "Dependencies ready."
@@ -44,10 +45,11 @@ $(DATA_ZIP_IS_DOWNLOADED):
 	@wget -O $(DATA_ZIP) $(DATA_ZIP_URL)
 
 play:
-	@cd $(CPP_SRC)/$(BUILD_DIR) && ./VVVVVV
+	@cd $(CPP_SRC)/$(BIN_DIR) && ./VVVVVV
 
 clean:
 	@rm -rf $(CPP_SRC)/$(BUILD_DIR)
+	@rm -rf $(CPP_SRC)/$(BIN_DIR)
 
 purge: clean
 	@rm -f $(DATA_ZIP)

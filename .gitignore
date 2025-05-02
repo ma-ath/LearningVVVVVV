@@ -1,5 +1,6 @@
 # Wildcards for folders
 **/build
+**/bin
 
 # Folders
 .sdl/
