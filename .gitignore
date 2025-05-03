@@ -1,9 +1,11 @@
 # Wildcards for folders
 **/build
 **/bin
+**/lib
 
 # Folders
 .sdl/
+.pybind11/
 
 # Files
 data.zip
