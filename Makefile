@@ -31,12 +31,12 @@ NPROC := $(shell nproc)
 
 all: build
 
-build: .dependecies
+build: .dependencies
 	@mkdir -p $(CPP_SRC)/$(BUILD_DIR)
 	@cd $(CPP_SRC)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
 	@ln -sf $(abspath $(DATA_ZIP)) $(CPP_SRC)/$(BIN_DIR)/$(DATA_ZIP)
 
-.dependecies: $(SDL_IS_INSTALLED) $(ASIO_IS_INSTALLED) $(VVVVVV_SOURCE_GIT_IS_INIT) $(DATA_ZIP_IS_DOWNLOADED)
+.dependencies: $(SDL_IS_INSTALLED) $(ASIO_IS_INSTALLED) $(VVVVVV_SOURCE_GIT_IS_INIT) $(DATA_ZIP_IS_DOWNLOADED)
 	@echo "Dependencies ready."
 
 $(SDL_IS_INSTALLED):
