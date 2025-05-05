@@ -4,6 +4,7 @@
 **/lib
 
 # Folders
+.asio/
 .sdl/
 .pybind11/
 
