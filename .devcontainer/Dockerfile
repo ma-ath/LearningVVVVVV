@@ -46,6 +46,7 @@ RUN sudo apt-get update && \
         libpulse-dev\
         libasound2-dev\
         libpipewire-0.3-dev\
+        openssh-client\
         pkg-config\  
         wayland-protocols\
         wget\
