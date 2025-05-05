@@ -48,7 +48,7 @@ $(SDL_IS_INSTALLED):
 $(ASIO_IS_INSTALLED):
 	@git clone $(ASIO_GIT_URL) $(ASIO_SOURCE_DIR) --branch $(ASIO_GIT_BRANCH)
 	@cd $(ASIO_SOURCE_DIR)/asio && bash autogen.sh
-	@cd $(ASIO_SOURCE_DIR)/asio && bash configure
+	@cd $(ASIO_SOURCE_DIR)/asio && ./configure --without-boost
 	@cd $(ASIO_SOURCE_DIR)/asio && make -j $(NPROC)
 	@cd $(ASIO_SOURCE_DIR)/asio && sudo make install
 

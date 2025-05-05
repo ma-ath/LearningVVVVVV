@@ -28,7 +28,8 @@ ENV TZ=Asia/Tokyo
 RUN sudo apt-get update && \
     sudo apt-get upgrade -y && \
     sudo apt-get install -y --no-install-recommends \
-        build-essential \
+        autoconf\
+        build-essential\
         ca-certificates\
         cmake\
         git\

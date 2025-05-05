@@ -33,6 +33,7 @@
 #include "RenderFixed.h"
 #include "Screen.h"
 #include "Script.h"
+#include "SocketServer.h"
 #include "UtilityClass.h"
 #include "Vlogging.h"
 
@@ -50,6 +51,7 @@ KeyPoll key;
 mapclass map;
 entityclass obj;
 Screen gameScreen;
+SocketServer server;
 
 static bool startinplaytest = false;
 static bool savefileplaytest = false;
@@ -394,6 +396,7 @@ int main(int argc, char *argv[])
     int invalid_partial_arg = 0;
 
     vlog_init();
+    server.run();
 
     for (int i = 1; i < argc; ++i)
     {

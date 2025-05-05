@@ -77,7 +77,7 @@ else()
     endif()
 
     # Source Lists
-    set(VVV_CXX_SRC
+    set(VVV_CXX98_SRC
         ${VVVVVV_SOURCE}/src/BinaryBlob.cpp
         ${VVVVVV_SOURCE}/src/BlockV.cpp
         ${VVVVVV_SOURCE}/src/ButtonGlyphs.cpp
@@ -120,8 +120,14 @@ else()
         ${VVVVVV_SOURCE}/src/UtilityClass.cpp
         ${VVVVVV_SOURCE}/src/WarpClass.cpp
         ${VVVVVV_SOURCE}/src/XMLUtils.cpp
-        # Modified Source Files
+    )
+    set(VVV_CXX11_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/SocketServer.cpp
+    )
+    set(VVV_CXX_SRC
+        ${VVV_CXX98_SRC}
+        ${VVV_CXX11_SRC}
     )
     set(VVV_C_SRC
         ${VVVVVV_SOURCE}/src/DeferCallbacks.c
@@ -342,7 +348,11 @@ else()
         string(REGEX REPLACE "-std=[a-z0-9+]+" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
         string(REPLACE "-fexceptions" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
         string(REPLACE "-frtti" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-        set_source_files_properties(${VVV_CXX_SRC} PROPERTIES COMPILE_FLAGS "-std=c++98 -fno-exceptions -fno-rtti")
+        set_source_files_properties(${VVV_CXX98_SRC} PROPERTIES COMPILE_FLAGS "-std=c++98 -fno-exceptions -fno-rtti")
+        set_source_files_properties(
+            ${VVV_CXX11_SRC}
+            PROPERTIES COMPILE_FLAGS "-std=c++11"
+        )
 
         # Dependencies (as needed)
         set_source_files_properties(${FAUDIO_SRC} PROPERTIES COMPILE_FLAGS -std=c99)
@@ -521,5 +531,7 @@ else()
         ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib"
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
+        INSTALL_RPATH "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+        BUILD_WITH_INSTALL_RPATH TRUE
     )
 endif()
