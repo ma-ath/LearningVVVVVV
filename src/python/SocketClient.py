@@ -1,26 +1,29 @@
 import socket
 
-SERVER_HOST = '127.0.0.1'  # localhost
-SERVER_PORT = 8000         # Must match VVVVVV_SERVER_PORT in C++
+from Messages import Messages
 
-def main():
-    try:
-        # Create a TCP socket
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            sock.connect((SERVER_HOST, SERVER_PORT))
-            print(f"Connected to server at {SERVER_HOST}:{SERVER_PORT}")
 
-            # Send a message
-            message = "Hello from Python client!"
-            sock.sendall(message.encode('utf-8'))
-            print(f"Sent: {message}")
+class SocketClient:
+    def __init__(self, host: str = '127.0.0.1', port: int = 8000):
+        self.socket = None
+        self.host = host
+        self.port = port
 
-            # Optionally receive a response (not implemented in C++ server currently)
-            # response = sock.recv(1024)
-            # print(f"Received: {response.decode('utf-8')}")
+    def Connect(self) -> None:
+        try:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.connect((self.host, self.port))
+            print(f"Connected to game server at {self.host}:{self.port}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    def Send(self, message: bytes) -> None:
+        if self.socket:
+            self.socket.sendall(message)
+        else:
+            print("Socket is not connected.")
 
-if __name__ == '__main__':
-    main()
+    def Close(self):
+        if self.socket:
+            self.socket.close()
+            print("Socket closed.")

@@ -124,6 +124,7 @@ else()
     set(VVV_CXX11_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SocketServer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/GameController.cpp
     )
     set(VVV_CXX_SRC
         ${VVV_CXX98_SRC}

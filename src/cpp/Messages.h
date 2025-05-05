@@ -1,0 +1,9 @@
+#ifndef MESSAGES_H
+#define MESSAGES_H
+
+#define GAME_CONTROLLER_UP       0x00
+#define GAME_CONTROLLER_DOWN     0x01
+#define GAME_CONTROLLER_LEFT     0x02
+#define GAME_CONTROLLER_RIGHT    0x03
+
+#endif

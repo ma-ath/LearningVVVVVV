@@ -1,13 +1,16 @@
 #ifndef SOCKETSERVER_H
 #define SOCKETSERVER_H
 
+#define VVVVVV_SERVER_PORT 8000 // Default port for the server
+
 #include <array>
 #include <iostream>
 #include <memory>
 #include <asio.hpp>
 #include <thread>
 
-#define VVVVVV_SERVER_PORT 8000 // Default port for the server
+#include "GameController.h"
+
 
 class SocketServer
 {
@@ -23,6 +26,7 @@ private:
     asio::io_context io_context_; // ASIO context for managing I/O
     asio::ip::tcp::acceptor acceptor_; // TCP acceptor for handling connections
     std::thread server_thread_;
+    GameController game_controller_; // Game controller instance
 };
 
 #endif // SOCKETSERVER_H

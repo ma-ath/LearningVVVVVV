@@ -1,8 +1,12 @@
+#include <SDL2/SDL.h>
+
+#include "Messages.h"
 #include "SocketServer.h"
 
 SocketServer::SocketServer()
     : io_context_(),
       acceptor_(io_context_, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), VVVVVV_SERVER_PORT))
+
 {
     start_accept();
 }
@@ -49,6 +53,26 @@ void SocketServer::start_read(std::shared_ptr<asio::ip::tcp::socket> socket)
         if (!error)
         {
             std::cout << "Received: " << std::string(buffer->data(), bytes_transferred) << std::endl;
+            // Game Controller logic
+            {
+                switch (buffer->data()[0])
+                {
+                    case GAME_CONTROLLER_UP:
+                        game_controller_.pressKey(SDLK_UP);
+                        break;
+                    case GAME_CONTROLLER_DOWN:
+                        game_controller_.pressKey(SDLK_DOWN);
+                        break;
+                    case GAME_CONTROLLER_LEFT:
+                        game_controller_.pressKey(SDLK_LEFT);
+                        break;
+                    case GAME_CONTROLLER_RIGHT:
+                        game_controller_.pressKey(SDLK_RIGHT);
+                        break;
+                    default:
+                        std::cout << "Unknown command received." << std::endl;
+                }
+            }
             start_read(socket); // Continue reading from the same client
         }
         else
