@@ -10,11 +10,11 @@ if __name__ == "__main__":
 
     while True:
         # Example of sending commands
-        game_controller.send_command(Messages.UP)
-        time.sleep(1)
-        game_controller.send_command(Messages.DOWN)
-        time.sleep(1)
-        game_controller.send_command(Messages.LEFT)
-        time.sleep(1)
-        game_controller.send_command(Messages.RIGHT)
-        time.sleep(1)
+        game_controller.send_command(Messages.PRESS_LEFT)
+        time.sleep(0.5)
+        game_controller.send_command(Messages.RELEASE_LEFT)
+        time.sleep(0.5)
+        game_controller.send_command(Messages.PRESS_RIGHT)
+        time.sleep(0.5)
+        game_controller.send_command(Messages.RELEASE_RIGHT)
+        time.sleep(0.5)

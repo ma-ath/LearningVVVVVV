@@ -1,7 +1,15 @@
 from enum import Enum
 
-class Messages(Enum):
-    UP: int = 0x00
-    DOWN: int = 0x01
-    LEFT: int = 0x02
-    RIGHT: int = 0x03
+class Messages(Enum):    
+    PRESS_UP: int = 0x00
+    RELEASE_UP: int = 0x01
+    PRESS_DOWN: int = 0x02
+    RELEASE_DOWN: int = 0x03
+    PRESS_LEFT: int = 0x04
+    RELEASE_LEFT: int = 0x05
+    PRESS_RIGHT: int = 0x06
+    RELEASE_RIGHT: int = 0x07
+    PRESS_Z: int = 0x08
+    RELEASE_Z: int = 0x09
+    PRESS_ESC: int = 0x0A
+    RELEASE_ESC: int = 0x0B

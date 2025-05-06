@@ -57,17 +57,41 @@ void SocketServer::start_read(std::shared_ptr<asio::ip::tcp::socket> socket)
             {
                 switch (buffer->data()[0])
                 {
-                    case GAME_CONTROLLER_UP:
+                    case GAME_CONTROLLER_PRESS_UP:
                         game_controller_.pressKey(SDLK_UP);
                         break;
-                    case GAME_CONTROLLER_DOWN:
+                    case GAME_CONTROLLER_RELEASE_UP:
+                        game_controller_.releaseKey(SDLK_UP);
+                        break;
+                    case GAME_CONTROLLER_PRESS_DOWN:
                         game_controller_.pressKey(SDLK_DOWN);
                         break;
-                    case GAME_CONTROLLER_LEFT:
+                    case GAME_CONTROLLER_RELEASE_DOWN:
+                        game_controller_.releaseKey(SDLK_DOWN);
+                        break;
+                    case GAME_CONTROLLER_PRESS_LEFT:
                         game_controller_.pressKey(SDLK_LEFT);
                         break;
-                    case GAME_CONTROLLER_RIGHT:
+                    case GAME_CONTROLLER_RELEASE_LEFT:
+                        game_controller_.releaseKey(SDLK_LEFT);
+                        break;
+                    case GAME_CONTROLLER_PRESS_RIGHT:
                         game_controller_.pressKey(SDLK_RIGHT);
+                        break;
+                    case GAME_CONTROLLER_RELEASE_RIGHT:
+                        game_controller_.releaseKey(SDLK_RIGHT);
+                        break;
+                    case GAME_CONTROLLER_PRESS_Z:
+                        game_controller_.pressKey(SDLK_z);
+                        break;
+                    case GAME_CONTROLLER_RELEASE_Z:
+                        game_controller_.releaseKey(SDLK_z);
+                        break;
+                    case GAME_CONTROLLER_PRESS_ESC:
+                        game_controller_.pressKey(SDLK_ESCAPE);
+                        break;
+                    case GAME_CONTROLLER_RELEASE_ESC:
+                        game_controller_.releaseKey(SDLK_ESCAPE);
                         break;
                     default:
                         std::cout << "Unknown command received." << std::endl;
