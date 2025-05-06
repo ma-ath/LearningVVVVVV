@@ -26,6 +26,14 @@ DATA_ZIP := data.zip
 DATA_ZIP_URL := https://thelettervsixtim.es/makeandplay/data.zip
 DATA_ZIP_IS_DOWNLOADED := $(DATA_ZIP)
 
+# venv and pip dependencies
+VENV_DIR := .venv
+PYTHON := python
+PIP := pip
+PIP_REQUIREMENTS := requirements.txt
+VENV_IS_INSTALLED := $(VENV_DIR)/bin/activate
+
+# Variables
 CPP_SRC := src/cpp
 BUILD_DIR := build
 BIN_DIR := bin
@@ -70,6 +78,10 @@ $(VVVVVV_SOURCE_GIT_IS_INIT):
 $(DATA_ZIP_IS_DOWNLOADED):
 	@wget -O $(DATA_ZIP) $(DATA_ZIP_URL)
 
+$(VENV_IS_INSTALLED):
+	@$(PYTHON) -m venv $(VENV_DIR)
+	$(PIP) install -r $(PIP_REQUIREMENTS)
+
 play:
 	@cd $(CPP_SRC)/$(BIN_DIR) && ./VVVVVV
 
@@ -83,6 +95,7 @@ purge: clean
 	@rm -rf $(SDL_SOURCE_DIR)
 	@rm -rf $(SDL_IMAGE_SOURCE_DIR)
 	@rm -rf $(ASIO_SOURCE_DIR)
+	@rm -rf $(VENV_DIR)
 	@rm -rf .git/modules/VVVVVV
 	@git submodule deinit -f --all
 	@echo "All dependencies removed."
