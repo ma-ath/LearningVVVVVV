@@ -5,6 +5,12 @@ SDL_GIT_BRANCH := release-2.26.0
 SDL_WAYLAND := ON
 SDL_IS_INSTALLED := $(SDL_SOURCE_DIR)
 
+# Install SDL2_image dependency
+SDL_IMAGE_SOURCE_DIR := .sdl_image
+SDL_IMAGE_GIT_URL := https://github.com/libsdl-org/SDL_image.git
+SDL_IMAGE_GIT_BRANCH := release-2.8.8
+SDL_IMAGE_IS_INSTALLED := $(SDL_IMAGE_SOURCE_DIR)
+
 # Install ASIO dependency
 ASIO_SOURCE_DIR := .asio
 ASIO_GIT_URL := https://github.com/chriskohlhoff/asio.git
@@ -36,7 +42,7 @@ build: .dependencies
 	@cd $(CPP_SRC)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
 	@ln -sf $(abspath $(DATA_ZIP)) $(CPP_SRC)/$(BIN_DIR)/$(DATA_ZIP)
 
-.dependencies: $(SDL_IS_INSTALLED) $(ASIO_IS_INSTALLED) $(VVVVVV_SOURCE_GIT_IS_INIT) $(DATA_ZIP_IS_DOWNLOADED)
+.dependencies: $(SDL_IS_INSTALLED) $(SDL_IMAGE_IS_INSTALLED) $(ASIO_IS_INSTALLED) $(VVVVVV_SOURCE_GIT_IS_INIT) $(DATA_ZIP_IS_DOWNLOADED)
 	@echo "Dependencies ready."
 
 $(SDL_IS_INSTALLED):
@@ -44,6 +50,12 @@ $(SDL_IS_INSTALLED):
 	@mkdir -p $(SDL_SOURCE_DIR)/$(BUILD_DIR)
 	@cd $(SDL_SOURCE_DIR)/$(BUILD_DIR) && cmake .. -DSDL_WAYLAND=$(SDL_WAYLAND) && make -j $(NPROC)
 	@sudo make -C $(SDL_SOURCE_DIR)/$(BUILD_DIR) install
+
+$(SDL_IMAGE_IS_INSTALLED):
+	@git clone $(SDL_IMAGE_GIT_URL) $(SDL_IMAGE_SOURCE_DIR) --branch $(SDL_IMAGE_GIT_BRANCH)
+	@mkdir -p $(SDL_IMAGE_SOURCE_DIR)/$(BUILD_DIR)
+	@cd $(SDL_IMAGE_SOURCE_DIR)/$(BUILD_DIR) && cmake .. && make -j $(NPROC)
+	@sudo make -C $(SDL_IMAGE_SOURCE_DIR)/$(BUILD_DIR) install
 
 $(ASIO_IS_INSTALLED):
 	@git clone $(ASIO_GIT_URL) $(ASIO_SOURCE_DIR) --branch $(ASIO_GIT_BRANCH)
@@ -69,6 +81,7 @@ clean:
 purge: clean
 	@rm -f $(DATA_ZIP)
 	@rm -rf $(SDL_SOURCE_DIR)
+	@rm -rf $(SDL_IMAGE_SOURCE_DIR)
 	@rm -rf $(ASIO_SOURCE_DIR)
 	@rm -rf .git/modules/VVVVVV
 	@git submodule deinit -f --all

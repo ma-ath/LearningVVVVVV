@@ -6,7 +6,9 @@
 # Folders
 .asio/
 .sdl/
+.sdl_image/
 .pybind11/
+.venv/
 __pycache__/
 
 # Files

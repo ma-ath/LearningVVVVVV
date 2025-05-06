@@ -44,14 +44,19 @@ RUN sudo apt-get update && \
         libxext-dev\
         linux-headers-$(uname -r)\
         libpulse-dev\
+        libavif-dev\
+        libjpeg-dev\
+        libtiff-dev\
         libasound2-dev\
         libpipewire-0.3-dev\
         openssh-client\
-        pkg-config\  
+        pkg-config\
         wayland-protocols\
         wget\
         xdg-desktop-portal\
-        xdg-desktop-portal-gtk
+        xdg-desktop-portal-gtk\
+        python3-venv\
+        python-is-python3\
 
     
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
