@@ -516,6 +516,10 @@ else()
         find_library(IOKIT NAMES IOKit)
         target_link_libraries(VVVVVV objc ${IOKIT} ${FOUNDATION})
     endif()
+
+    find_package(SDL2_image REQUIRED)
+    target_link_libraries(VVVVVV SDL2_image)
+
     # But hey, also some Haiku crap
     if(HAIKU)
         find_library(BE_LIBRARY be)
