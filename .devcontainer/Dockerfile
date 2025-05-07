@@ -56,7 +56,7 @@ RUN sudo apt-get update && \
         xdg-desktop-portal\
         xdg-desktop-portal-gtk\
         python3-venv\
-        python-is-python3\
+        python-is-python3
 
     
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
